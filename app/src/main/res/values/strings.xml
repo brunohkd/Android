@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Calculadora Simples</string>
+    <string name="resposta">Resposta</string>
+    <string name="digite_aqui">digite aqui...</string>
+</resources>
