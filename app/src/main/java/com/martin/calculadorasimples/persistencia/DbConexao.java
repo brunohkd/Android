@@ -2,10 +2,13 @@ package com.martin.calculadorasimples.persistencia;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.martin.calculadorasimples.entidade.Calculo;
+
+import java.util.ArrayList;
 
 /**
  * Created by 978907 on 29/10/2016.
@@ -31,6 +34,36 @@ public class DbConexao extends SQLiteOpenHelper {
         db.insert("calculos", null, values);
         db.close();
     }
+
+
+    public int getQuantidade(){
+        SQLiteDatabase db = getReadableDatabase();
+        String selectQuery = "SELECT * FROM calculos";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor.getCount();
+    }
+
+    public Calculo getItem(int posicao){
+        SQLiteDatabase db = getReadableDatabase();
+        String selectQuery = "SELECT * FROM calculos";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        ArrayList<Calculo> calculoLista = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            do {
+                Calculo calculo= new Calculo();
+                calculo.setId(cursor.getLong(0));
+                calculo.setValorUm(cursor.getDouble(1));
+                calculo.setValorDois(cursor.getDouble(2));
+                calculo.setResposta(cursor.getDouble(3));
+                calculoLista.add(calculo);
+            } while (cursor.moveToNext());
+            db.close();
+        }
+        return calculoLista.get(posicao);
+    }
+
 
    @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {

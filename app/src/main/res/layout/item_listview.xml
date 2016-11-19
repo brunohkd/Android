@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--Valor um-->
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Valor um:"
+            android:id="@+id/textView1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="xxxxxx"
+            android:id="@+id/valorUmTextView"
+            android:layout_marginLeft="5dp"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </TableRow>
+
+
+    <!-- Operador -->
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Operador:"
+            android:id="@+id/textView2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="xxxxxx"
+            android:id="@+id/operadorTextView"
+            android:layout_marginLeft="5dp"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </TableRow>
+
+
+    <!--Valor dois-->
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Valor dois:"
+            android:id="@+id/textView3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="xxxxxx"
+            android:id="@+id/valorDoisTextView"
+            android:layout_marginLeft="5dp"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </TableRow>
+
+    <!-- Resposta -->
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resposta:"
+            android:id="@+id/textView4" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="xxxxxx"
+            android:id="@+id/RespostaTextView"
+            android:layout_marginLeft="5dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_red_dark" />
+    </TableRow>
+
+</TableLayout>

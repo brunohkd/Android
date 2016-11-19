@@ -7,14 +7,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.martin.calculadorasimples.adaptador.AdapterListaResultados;
 import com.martin.calculadorasimples.entidade.Calculo;
 import com.martin.calculadorasimples.persistencia.DbConexao;
 
 public class PrincipalActivity extends AppCompatActivity implements View.OnClickListener {
     ImageButton adicaoButton, subtracaoButton, multiplicacaoButton, divisaoButton;
+    Button limpaButton;
     EditText valorUmEditText, valorDoisEditText;
     TextView respostaTextView;
 
@@ -27,15 +30,22 @@ public class PrincipalActivity extends AppCompatActivity implements View.OnClick
         subtracaoButton = (ImageButton) findViewById(R.id.subtracaoImageButton);
         multiplicacaoButton = (ImageButton) findViewById(R.id.multiplicacaoImageButton);
         divisaoButton = (ImageButton) findViewById(R.id.divisaoIageButton);
+        limpaButton = (Button) findViewById(R.id.limpaButton);
 
         adicaoButton.setOnClickListener(this);
         subtracaoButton.setOnClickListener(this);
         multiplicacaoButton.setOnClickListener(this);
         divisaoButton.setOnClickListener(this);
+        limpaButton.setOnClickListener(this);
 
         valorUmEditText = (EditText) findViewById(R.id.valorUmEditText);
         valorDoisEditText = (EditText) findViewById(R.id.valorDoisEditText);
         respostaTextView = (TextView) findViewById(R.id.respostaTextView);
+
+
+        ListView listView = (ListView) findViewById(R.id.listView);
+        listView.setAdapter(new AdapterListaResultados(this));
+
     }
 
     @Override
@@ -65,6 +75,11 @@ public class PrincipalActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.divisaoIageButton:
                 resultado = valorUm / valorDois;
+                break;
+            case R.id.limpaButton:
+                respostaTextView.setText("");
+                valorUmEditText.setText("");
+                valorDoisEditText.setText("");
                 break;
         }
         respostaTextView.setText(String.valueOf(resultado));

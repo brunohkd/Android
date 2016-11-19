@@ -10,6 +10,10 @@ public class Calculo {
     private double valorDois;
     private double resposta;
 
+    public Calculo(){
+
+    }
+
     public Calculo(double valorUm, double valorDois, double resposta) {
         this.valorUm = valorUm;
         this.valorDois = valorDois;
