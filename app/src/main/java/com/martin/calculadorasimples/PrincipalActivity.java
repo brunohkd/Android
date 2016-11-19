@@ -16,10 +16,11 @@ import com.martin.calculadorasimples.entidade.Calculo;
 import com.martin.calculadorasimples.persistencia.DbConexao;
 
 public class PrincipalActivity extends AppCompatActivity implements View.OnClickListener {
-    ImageButton adicaoButton, subtracaoButton, multiplicacaoButton, divisaoButton;
-    Button limpaButton;
-    EditText valorUmEditText, valorDoisEditText;
-    TextView respostaTextView;
+    private ImageButton adicaoButton, subtracaoButton, multiplicacaoButton, divisaoButton;
+    private Button limpaButton;
+    private EditText valorUmEditText, valorDoisEditText;
+    private TextView respostaTextView;
+    private AdapterListaResultados adapterListaResultados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,8 @@ public class PrincipalActivity extends AppCompatActivity implements View.OnClick
 
 
         ListView listView = (ListView) findViewById(R.id.listView);
-        listView.setAdapter(new AdapterListaResultados(this));
+        adapterListaResultados = new AdapterListaResultados(this);
+        listView.setAdapter(adapterListaResultados);
 
     }
 
@@ -87,6 +89,7 @@ public class PrincipalActivity extends AppCompatActivity implements View.OnClick
         Calculo calculo = new Calculo(valorUm, valorDois, resultado);
         DbConexao dbConexao = new DbConexao(this);
         dbConexao.inserir(calculo);
+        adapterListaResultados.notifyDataSetChanged();
 
     }
 }
