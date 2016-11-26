@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -21,6 +22,8 @@ public class PrincipalActivity extends AppCompatActivity implements View.OnClick
     private EditText valorUmEditText, valorDoisEditText;
     private TextView respostaTextView;
     private AdapterListaResultados adapterListaResultados;
+    private boolean inserir = true;
+    private long idAlteracao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +50,25 @@ public class PrincipalActivity extends AppCompatActivity implements View.OnClick
         ListView listView = (ListView) findViewById(R.id.listView);
         adapterListaResultados = new AdapterListaResultados(this);
         listView.setAdapter(adapterListaResultados);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view,
+                                    int posicao, long id) {
+                Calculo calculo = (Calculo) adapterListaResultados.getItem(posicao);
+                valorUmEditText.setText(calculo.getValorUmString());
+                valorDoisEditText.setText(calculo.getValorDoisString());
+                respostaTextView.setText(calculo.getRespostaString());
+                inserir = false;
+                idAlteracao = id;
+            }
+        });
 
     }
 
     @Override
     public void onClick(View view) {
         Log.d("MEUAPP", String.valueOf(view.getId()));
+        String operador = null;
 
         double valorUm = 0;
         double valorDois = 0;
@@ -68,27 +84,39 @@ public class PrincipalActivity extends AppCompatActivity implements View.OnClick
         switch (view.getId()){
             case R.id.adicaoImageButton:
                 resultado = valorUm + valorDois;
+                operador = "+";
                 break;
             case R.id.subtracaoImageButton:
                 resultado = valorUm - valorDois;
+                operador = "-";
                 break;
             case R.id.multiplicacaoImageButton:
                 resultado = valorUm * valorDois;
+                operador = "*";
                 break;
             case R.id.divisaoIageButton:
                 resultado = valorUm / valorDois;
+                operador = "/";
                 break;
             case R.id.limpaButton:
                 respostaTextView.setText("");
                 valorUmEditText.setText("");
                 valorDoisEditText.setText("");
+                inserir = true;
                 break;
         }
         respostaTextView.setText(String.valueOf(resultado));
 
-        Calculo calculo = new Calculo(valorUm, valorDois, resultado);
+        Calculo calculo = new Calculo(valorUm, valorDois, operador, resultado);
         DbConexao dbConexao = new DbConexao(this);
-        dbConexao.inserir(calculo);
+        if(inserir)
+            dbConexao.inserir(calculo);
+        else {
+            calculo.setId(idAlteracao);
+            dbConexao.alterar(calculo);
+            inserir = true;
+        }
+
         adapterListaResultados.notifyDataSetChanged();
 
     }

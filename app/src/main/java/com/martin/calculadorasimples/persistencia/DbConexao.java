@@ -28,10 +28,26 @@ public class DbConexao extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("valorum", calculo.getValorUm());
         values.put("valordois", calculo.getValorDois());
+        values.put("operador", calculo.getOperador());
         values.put("resposta", calculo.getResposta());
 
         SQLiteDatabase db = getWritableDatabase();
         db.insert("calculos", null, values);
+        db.close();
+    }
+
+    public void alterar(Calculo calculo) {
+
+        ContentValues values = new ContentValues();
+        values.put("valorum", calculo.getValorUm());
+        values.put("valordois", calculo.getValorDois());
+        values.put("operador", calculo.getOperador());
+        values.put("resposta", calculo.getResposta());
+        String whare = "id = ?";
+
+        SQLiteDatabase db = getWritableDatabase();
+        int id = db.update("calculos", values, whare,
+                new String[]{String.valueOf(calculo.getId())});
         db.close();
     }
 
@@ -56,7 +72,8 @@ public class DbConexao extends SQLiteOpenHelper {
                 calculo.setId(cursor.getLong(0));
                 calculo.setValorUm(cursor.getDouble(1));
                 calculo.setValorDois(cursor.getDouble(2));
-                calculo.setResposta(cursor.getDouble(3));
+                calculo.setOperador(cursor.getString(3));
+                calculo.setResposta(cursor.getDouble(4));
                 calculoLista.add(calculo);
             } while (cursor.moveToNext());
             db.close();
@@ -71,6 +88,7 @@ public class DbConexao extends SQLiteOpenHelper {
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT ,"
                 + "valorum Real, "
                 + "valordois Real, "
+                + "operador text, "
                 + "resposta Real )";
         sqLiteDatabase.execSQL(CRIA_TABELA_calculo);
     }
@@ -79,4 +97,6 @@ public class DbConexao extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
+
+
 }

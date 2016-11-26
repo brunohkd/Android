@@ -48,7 +48,7 @@ public class AdapterListaResultados extends BaseAdapter {
 
         TextView valorUmTextView = (TextView) view.findViewById(R.id.valorUmTextView);
         TextView valorDoisTextView = (TextView) view.findViewById(R.id.valorDoisTextView);
-        //TextView operadorTextView = (TextView) view.findViewById(R.id.operadorTextView);
+        TextView operadorTextView = (TextView) view.findViewById(R.id.operadorTextView);
         TextView respostaTextView = (TextView) view.findViewById(R.id.RespostaTextView);
 
         Calculo calculo = (Calculo) getItem(i);
@@ -56,7 +56,7 @@ public class AdapterListaResultados extends BaseAdapter {
 
         valorUmTextView.setText(String.valueOf(calculo.getValorUm()));
         valorDoisTextView.setText(String.valueOf(calculo.getValorDois()));
-        //operadorTextView.setText("Não registrado!!!!");
+        operadorTextView.setText(calculo.getOperador());
         respostaTextView.setText(String.valueOf(calculo.getResposta()));
 
         return view;
