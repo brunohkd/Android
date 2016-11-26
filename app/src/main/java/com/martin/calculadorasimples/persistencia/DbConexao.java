@@ -51,6 +51,17 @@ public class DbConexao extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void excluir(long id) {
+
+        String whare = "id = ?";
+
+        SQLiteDatabase db = getWritableDatabase();
+        int ret = db.delete("calculos", whare,
+                new String[]{String.valueOf(id)});
+        db.close();
+    }
+
+
 
     public int getQuantidade(){
         SQLiteDatabase db = getReadableDatabase();
@@ -97,6 +108,7 @@ public class DbConexao extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
+
 
 
 }

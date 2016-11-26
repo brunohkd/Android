@@ -1,5 +1,8 @@
 package com.martin.calculadorasimples;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -60,6 +63,39 @@ public class PrincipalActivity extends AppCompatActivity implements View.OnClick
                 respostaTextView.setText(calculo.getRespostaString());
                 inserir = false;
                 idAlteracao = id;
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view,
+                                           int posicao, long id) {
+                final Context contexto = adapterView.getContext();
+                final long idRegistro = id;
+
+
+                AlertDialog.Builder alerta = new AlertDialog.Builder(contexto);
+                alerta.setTitle("Faça sua Escolha");
+                alerta.setMessage("Confirma exclusão?");
+
+                alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        (new DbConexao(contexto)).excluir(idRegistro);
+                        adapterListaResultados.notifyDataSetChanged();
+                    }
+                });
+
+                alerta.setNegativeButton("Não", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(contexto,"Cancelado!!!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                alerta.show();
+
+
+                return false;
             }
         });
 
